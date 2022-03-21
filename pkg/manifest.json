@@ -1,0 +1,12 @@
+{
+    "name": "ms-doc-en-tooltip",
+    "description": "Shows english version of MS document in tooltip per paragraph",
+    "version": "0.1",
+    "manifest_version": 3,
+    "content_scripts": [
+        {
+            "matches": ["https://docs.microsoft.com/*"],
+            "js": ["content-script.js"]
+        }
+    ]
+}
