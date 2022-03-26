@@ -43,13 +43,13 @@ function tooltip() {
 function getElementsSet(body, href) {
     const main = body.getElementsByTagName('main')[0];
     const set = {
-        p: Array.from(main.getElementsByTagName('p')),
-        li: Array.from(main.getElementsByTagName('li')),
-        td: Array.from(main.getElementsByTagName('td')),
-        h1: Array.from(main.getElementsByTagName('h1')),
-        h2: Array.from(main.getElementsByTagName('h2')),
-        h3: Array.from(main.getElementsByTagName('h3')),
-        h4: Array.from(main.getElementsByTagName('h4')),
+        p: Array.from(main.getElementsByTagName('p')).reverse(),
+        li: Array.from(main.getElementsByTagName('li')).reverse(),
+        td: Array.from(main.getElementsByTagName('td')).reverse(),
+        h1: Array.from(main.getElementsByTagName('h1')).reverse(),
+        h2: Array.from(main.getElementsByTagName('h2')).reverse(),
+        h3: Array.from(main.getElementsByTagName('h3')).reverse(),
+        h4: Array.from(main.getElementsByTagName('h4')).reverse(),
     };
     console.log(`Tags count found in ${href}:`);
     console.log(`p: ${set.p.length}`);
