@@ -1,0 +1,13 @@
+.ms-doc-lang-switcher {
+    position: fixed;
+    top: 50px;
+    right: 50px;
+    padding: 5px 20px;
+}
+
+.ms-doc-url-copy {
+    position: fixed;
+    top: 100px;
+    right: 50px;
+    padding: 5px 20px;
+}
