@@ -1,6 +1,6 @@
 {
     "name": "ms-doc-en-tooltip",
-    "description": "Shows english version of MS document in tooltip per paragraph",
+    "description": "Add language switcher for english version of MS document and buttons to copy URLs",
     "version": "0.1",
     "manifest_version": 3,
     "content_scripts": [
