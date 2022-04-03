@@ -13,6 +13,13 @@ function updateDomWithEnglishVersion() {
 }
 
 function enableCopyButtons() {
+    const toastId = "ms-doc-toast-url-copied";
+    document.body.insertAdjacentHTML(
+        'afterbegin',
+        `<p id="${toastId}" class="${toastId}">URL copied!</p>`
+    );
+    document.getElementById(toastId).hidden = true;
+
     document.body.insertAdjacentHTML(
         'beforeend',
         '<button id="ms-doc-url-copy" class="ms-doc-url-copy"><span id="button-copy-fixed-icon" /></button>'
@@ -24,6 +31,7 @@ function enableCopyButtons() {
         () => {
             try {
                 navigator.clipboard.writeText(`- ${h1.textContent}\n${location.href}`);
+                toastCopyUrl();
                 console.log(`Copied to clipboard!`);
             } catch (err) {
                 console.error('Failed to copy: ', err);
@@ -33,6 +41,17 @@ function enableCopyButtons() {
 
     Array.from(document.getElementsByTagName('h2')).forEach(insertCopyButtons);
     Array.from(document.getElementsByTagName('h3')).forEach(insertCopyButtons);
+}
+
+function toastCopyUrl() {
+    const toast = document.getElementById("ms-doc-toast-url-copied");
+    toast.hidden = false;
+    setTimeout(
+        () => {
+            toast.hidden = true;
+        },
+        3000
+    );
 }
 
 function insertCopyButtons(element) {
@@ -46,6 +65,7 @@ function insertCopyButtons(element) {
         () => {
             try {
                 navigator.clipboard.writeText(`- ${element.textContent}\n${location.href}#${element.id}`);
+                toastCopyUrl();
                 console.log(`Copied to clipboard!`);
             } catch (err) {
                 console.error('Failed to copy: ', err);

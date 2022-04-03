@@ -41,3 +41,14 @@
     border:0px;
     background-color: transparent;
 }
+
+.ms-doc-toast-url-copied {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    font-size: 18px;
+    font-weight: bold;
+    align-content: center;
+    background-color: green;
+    padding: 10px 30px 10px 30px;
+}
