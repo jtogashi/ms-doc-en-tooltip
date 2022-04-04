@@ -64,8 +64,9 @@ function insertCopyButtons(element) {
     document.getElementById(buttonId).addEventListener(
         'click',
         () => {
+            const h1 = document.getElementsByTagName('h1')[0];
             try {
-                navigator.clipboard.writeText(`- ${element.textContent}\n${location.href}#${element.id}`);
+                navigator.clipboard.writeText(`- ${h1.textContent} - ${element.textContent}\n${location.href}#${element.id}`);
                 toastCopyUrl();
                 console.log(`Copied to clipboard!`);
             } catch (err) {
