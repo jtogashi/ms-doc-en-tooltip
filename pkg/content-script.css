@@ -7,7 +7,7 @@
 
 .ms-doc-lang-switcher {
     position: fixed;
-    top: 50px;
+    bottom: 50px;
     right: 50px;
     padding: 5px 20px;
     border:0px;
@@ -16,7 +16,7 @@
 
 .ms-doc-url-copy {
     position: fixed;
-    top: 100px;
+    bottom: 100px;
     right: 50px;
     padding: 5px 20px;
     border:0px;
