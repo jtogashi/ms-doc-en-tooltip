@@ -41,6 +41,7 @@ function enableCopyButtons() {
 
     Array.from(document.getElementsByTagName('h2')).forEach(insertCopyButtons);
     Array.from(document.getElementsByTagName('h3')).forEach(insertCopyButtons);
+    Array.from(document.getElementsByTagName('h4')).forEach(insertCopyButtons);
 }
 
 function toastCopyUrl() {
