@@ -1,4 +1,4 @@
-# ms-doc-en-tooltip
+# ms-docs-assistant
 
 This is a simple chromium extension that adds language switcher for english version of MS document
 and buttons to copy URLs.
