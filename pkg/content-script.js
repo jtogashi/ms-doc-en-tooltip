@@ -1,23 +1,33 @@
-if (location.pathname.toLowerCase().startsWith('/en-us/')) {
-    enableLanguageSwitcher();
-} else {
-    updateDomWithEnglishVersion();
-}
+chrome.storage.sync.get({
+    copyFormat: "- {{h1}}\n{{url}}",
+    copyFormatAnchor: "- {{h1}} - {{anchor}}\n{{url}}",
+    langDefault: 'ja-jp'
+}, (options) => {
+    if (!location.pathname.toLowerCase().startsWith(`/${options.langDefault}/`)) {
+        enableLanguageSwitcher(options.langDefault);
+    } else {
+        updateDomWithEnglishVersion(
+            options.copyFormat,
+            options.copyFormatAnchor,
+            options.langDefault
+        );
+    }
+});
 
 
-function updateDomWithEnglishVersion() {
+function updateDomWithEnglishVersion(copyFormat, copyFormatAnchor, langDefault) {
     const urlEn = location.href.replace(/\/[a-z]{2}-[a-z]{2}\//i, '/en-us/');
 
     const domEn = fetch(urlEn)
         .then(response => response.text())
         .then(text => new DOMParser().parseFromString(text, 'text/html'))
         .then((domEn) => {
-            enableCopyButtons();
-            enableLanguageToggler(domEn);
+            enableCopyButtons(copyFormat, copyFormatAnchor);
+            enableLanguageToggler(domEn, langDefault);
         });
 }
 
-function enableCopyButtons() {
+function enableCopyButtons(copyFormat, copyFormatAnchor) {
     const toastId = "ms-doc-toast-url-copied";
     document.body.insertAdjacentHTML(
         'afterbegin',
@@ -35,7 +45,12 @@ function enableCopyButtons() {
         'click',
         () => {
             try {
-                navigator.clipboard.writeText(`- ${h1.textContent}\n${location.href}`);
+                const formatted = copyFormat
+                    .replace('{{title}}', location.title)
+                    .replace('{{h1}}', h1.textContent)
+                    .replace('{{url}}', location.href);
+
+                navigator.clipboard.writeText(formatted);
                 toastCopyUrl();
                 console.log(`Copied to clipboard!`);
             } catch (err) {
@@ -44,9 +59,15 @@ function enableCopyButtons() {
         }
     );
 
-    Array.from(document.getElementsByTagName('h2')).forEach(insertCopyButtons);
-    Array.from(document.getElementsByTagName('h3')).forEach(insertCopyButtons);
-    Array.from(document.getElementsByTagName('h4')).forEach(insertCopyButtons);
+    Array.from(document.getElementsByTagName('h2')).forEach((element) => {
+        insertCopyButtons(element, copyFormatAnchor);
+    });
+    Array.from(document.getElementsByTagName('h3')).forEach((element) => {
+        insertCopyButtons(element, copyFormatAnchor);
+    });
+    Array.from(document.getElementsByTagName('h4')).forEach((element) => {
+        insertCopyButtons(element, copyFormatAnchor);
+    });
 }
 
 function toastCopyUrl() {
@@ -60,7 +81,7 @@ function toastCopyUrl() {
     );
 }
 
-function insertCopyButtons(element) {
+function insertCopyButtons(element, copyFormatAnchor) {
     const buttonId = `ms-doc-url-copy-${element.tagName}-${element.id}`;
     element.insertAdjacentHTML(
         'beforeend',
@@ -71,7 +92,13 @@ function insertCopyButtons(element) {
         () => {
             const h1 = document.getElementsByTagName('h1')[0];
             try {
-                navigator.clipboard.writeText(`- ${h1.textContent} - ${element.textContent}\n${location.href}#${element.id}`);
+                const formatted = copyFormatAnchor
+                    .replace('{{title}}', location.title)
+                    .replace('{{h1}}', h1.textContent)
+                    .replace('{{anchor}}', element.textContent)
+                    .replace('{{url}}', `${location.href}#${element.id}`);
+
+                navigator.clipboard.writeText(formatted);
                 toastCopyUrl();
                 console.log(`Copied to clipboard!`);
             } catch (err) {
@@ -121,7 +148,7 @@ function enableLanguageToggler(domEn) {
     );
 }
 
-function enableLanguageSwitcher() {
+function enableLanguageSwitcher(langDefault) {
     document.body.insertAdjacentHTML(
         'beforeend',
         '<button id="ms-doc-lang-switcher" class="ms-doc-lang-button"><span id="ms-doc-lang-button-icon" /></button>'
@@ -130,8 +157,8 @@ function enableLanguageSwitcher() {
     document.getElementById('ms-doc-lang-switcher').addEventListener(
         'click',
         () => {
-            const pathJp = location.pathname.replace(/\/en-us\//i, '/ja-jp/');
-            location.href = pathJp;
+            const pathLangDefalut = location.pathname.replace(/\/[a-z]{2}-[a-z]{2}\//i, `/${langDefault}/`);
+            location.href = pathLangDefalut;
         }
     );
 

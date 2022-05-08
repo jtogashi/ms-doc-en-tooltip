@@ -3,6 +3,13 @@
     "description": "Add language switcher for english version of MS document and buttons to copy URLs",
     "version": "0.3.0",
     "manifest_version": 3,
+    "permissions": [
+        "storage"
+    ],
+    "options_ui": {
+        "page": "options.html",
+        "open_in_tab": false
+    },
     "content_scripts": [
         {
             "matches": ["https://docs.microsoft.com/*"],
