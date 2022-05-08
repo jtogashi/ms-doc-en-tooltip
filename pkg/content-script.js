@@ -1,4 +1,9 @@
-updateDomWithEnglishVersion();
+if (location.pathname.toLowerCase().startsWith('/en-us/')) {
+    enableLanguageSwitcher();
+} else {
+    updateDomWithEnglishVersion();
+}
+
 
 function updateDomWithEnglishVersion() {
     const urlEn = location.href.replace(/\/[a-z]{2}-[a-z]{2}\//i, '/en-us/');
@@ -8,7 +13,7 @@ function updateDomWithEnglishVersion() {
         .then(text => new DOMParser().parseFromString(text, 'text/html'))
         .then((domEn) => {
             enableCopyButtons();
-            enableLanguageSwitch(domEn);
+            enableLanguageToggler(domEn);
         });
 }
 
@@ -76,7 +81,7 @@ function insertCopyButtons(element) {
     );
 }
 
-function enableLanguageSwitch(domEn) {
+function enableLanguageToggler(domEn) {
     const bodyElementsOrig = Array.from(document.body.children);
 
     document.body.insertAdjacentHTML(
@@ -104,14 +109,30 @@ function enableLanguageSwitch(domEn) {
 
     document.body.insertAdjacentHTML(
         'beforeend',
-        '<button id="ms-doc-lang-switcher" class="ms-doc-lang-switcher"><span id="ms-doc-lang-switcher-icon" /></button>'
+        '<button id="ms-doc-lang-toggler" class="ms-doc-lang-button"><span id="ms-doc-lang-button-icon" /></button>'
     );
 
-    document.getElementById('ms-doc-lang-switcher').addEventListener(
+    document.getElementById('ms-doc-lang-toggler').addEventListener(
         'click',
         () => {
             langOrig.hidden = !langOrig.hidden;
             langEn.hidden = !langEn.hidden;
         }
     );
+}
+
+function enableLanguageSwitcher() {
+    document.body.insertAdjacentHTML(
+        'beforeend',
+        '<button id="ms-doc-lang-switcher" class="ms-doc-lang-button"><span id="ms-doc-lang-button-icon" /></button>'
+    );
+
+    document.getElementById('ms-doc-lang-switcher').addEventListener(
+        'click',
+        () => {
+            const pathJp = location.pathname.replace(/\/en-us\//i, '/ja-jp/');
+            location.href = pathJp;
+        }
+    );
+
 }
