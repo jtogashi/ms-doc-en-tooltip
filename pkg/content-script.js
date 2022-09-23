@@ -48,7 +48,7 @@ function enableCopyButtons(copyFormat, copyFormatAnchor) {
                 const formatted = copyFormat
                     .replace('{{title}}', location.title)
                     .replace('{{h1}}', h1.textContent)
-                    .replace('{{url}}', location.href);
+                    .replace('{{url}}', location.href.replace(/#.*$/, ""));
 
                 navigator.clipboard.writeText(formatted);
                 toastCopyUrl();
@@ -96,7 +96,7 @@ function insertCopyButtons(element, copyFormatAnchor) {
                     .replace('{{title}}', location.title)
                     .replace('{{h1}}', h1.textContent)
                     .replace('{{anchor}}', element.textContent)
-                    .replace('{{url}}', `${location.href}#${element.id}`);
+                    .replace('{{url}}', `${location.href.replace(/#.*$/, "")}#${element.id}`);
 
                 navigator.clipboard.writeText(formatted);
                 toastCopyUrl();
