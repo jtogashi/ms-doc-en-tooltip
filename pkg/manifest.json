@@ -12,7 +12,7 @@
     },
     "content_scripts": [
         {
-            "matches": ["https://docs.microsoft.com/*"],
+            "matches": ["https://learn.microsoft.com/*"],
             "js": ["content-script.js"],
             "css": ["content-script.css"]
         }
